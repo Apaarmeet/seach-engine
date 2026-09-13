@@ -1,0 +1,41 @@
+# Fly.io deployment.
+#
+# Chosen over Render's free tier because that spins containers down when
+# idle: the first visitor after a quiet period waits ~60s for a cold start.
+# For a link someone opens days after receiving it, that reads as broken.
+# `min_machines_running = 1` keeps it warm.
+
+app = "rsearch-india"
+primary_region = "bom"          # Mumbai — closest to the data and the audience
+
+[build]
+  dockerfile = "Dockerfile"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = false     # never sleep; see note above
+  auto_start_machines = true
+  min_machines_running = 1
+  processes = ["app"]
+
+  [http_service.concurrency]
+    type = "requests"
+    soft_limit = 50
+    hard_limit = 100
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "1gb"
+  # 1 GB rather than 512 MB: the gazetteer is a 31 MB JSON file parsed into
+  # an in-memory map of 312k places, and tantivy mmaps ~250 MB of index.
+  # 512 MB leaves no headroom for the JSON parse spike at startup.
+
+[checks]
+  [checks.health]
+    type = "http"
+    port = 8080
+    path = "/health"
+    interval = "30s"
+    timeout = "5s"
+    grace_period = "30s"

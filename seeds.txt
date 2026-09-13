@@ -1,0 +1,35 @@
+# Seed set chosen for LINK DENSITY, not just volume.
+#
+# Anchor text and PageRank are graph signals: they only carry information
+# when pages in the corpus link to other pages in the corpus. A random
+# scrape of unrelated domains produces a graph with no edges and therefore
+# no usable authority signal — which is exactly what a flat Common Crawl
+# slice gives you. These seeds sit in a densely interlinked cluster about
+# India, so the link signals actually light up at small corpus size.
+
+# Densely interlinked reference corpus (India topics)
+https://en.wikipedia.org/wiki/India
+https://en.wikipedia.org/wiki/Economy_of_India
+https://en.wikipedia.org/wiki/History_of_India
+https://en.wikipedia.org/wiki/States_and_union_territories_of_India
+https://en.wikipedia.org/wiki/Indian_Railways
+https://en.wikipedia.org/wiki/Bengaluru
+https://en.wikipedia.org/wiki/Mumbai
+https://en.wikipedia.org/wiki/Delhi
+https://en.wikipedia.org/wiki/Chennai
+https://en.wikipedia.org/wiki/Kolkata
+https://en.wikipedia.org/wiki/Hyderabad
+https://en.wikipedia.org/wiki/Indian_Institutes_of_Technology
+https://en.wikipedia.org/wiki/Education_in_India
+https://en.wikipedia.org/wiki/Cricket_in_India
+https://en.wikipedia.org/wiki/Cinema_of_India
+https://en.wikipedia.org/wiki/Languages_of_India
+https://en.wikipedia.org/wiki/Agriculture_in_India
+https://en.wikipedia.org/wiki/Monsoon
+https://en.wikipedia.org/wiki/Information_technology_in_India
+https://en.wikipedia.org/wiki/Startup_ecosystem_of_India
+https://en.wikipedia.org/wiki/Unified_Payments_Interface
+https://en.wikipedia.org/wiki/Aadhaar
+https://en.wikipedia.org/wiki/Reserve_Bank_of_India
+https://en.wikipedia.org/wiki/National_Stock_Exchange_of_India
+https://en.wikipedia.org/wiki/Indian_Space_Research_Organisation

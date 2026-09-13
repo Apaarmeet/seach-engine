@@ -1,0 +1,135 @@
+# 100 realistic local-search queries with expected behaviour.
+#
+# Format: expectation<TAB>query
+#
+# Expectations:
+#   local    - must return results near the user's coordinates
+#   place    - must resolve a named place and return results there
+#   named    - must return a result whose name matches the query
+#   decline  - must return nothing, or decline as too broad
+#
+# Written from what people actually type in India, not from what the engine
+# happens to handle. Several were added specifically because they failed.
+
+# --- proximity, plain categories ---
+local	cafes near me
+local	restaurants near me
+local	pharmacy near me
+local	hospital near me
+local	atm near me
+local	petrol pump near me
+local	grocery near me
+local	hotel near me
+local	gym near me
+local	parking near me
+local	bank near me
+local	school near me
+local	park near me
+local	temple near me
+local	salon near me
+local	bakery near me
+local	police station near me
+local	post office near me
+local	bus stop near me
+local	hospital nearby
+
+# --- proximity, colloquial and Indian English ---
+local	chemist near me
+local	medical store near me
+local	kirana near me
+local	medicine near me
+local	doctor near me
+local	dentist near me
+local	coffee near me
+local	chai near me
+local	food near me
+local	cheap food near me
+local	nearest atm
+local	nearest hospital
+local	closest pharmacy
+local	petrol near me
+local	diesel near me
+local	car repair near me
+local	barber near me
+local	stationery near me
+local	sweets near me
+local	fitness near me
+
+# --- plurals, which used to return nothing ---
+local	cafes
+local	hospitals near me
+local	restaurants
+local	pharmacies near me
+local	hotels near me
+local	banks near me
+local	gyms near me
+local	schools near me
+local	parks near me
+local	temples near me
+
+# --- place-scoped, major metros ---
+place	hospitals in chennai
+place	cafes in mumbai
+place	restaurants in bangalore
+place	atm in kolkata
+place	pharmacy in hyderabad
+place	hotels in jaipur
+place	gym in pune
+place	petrol pump in ahmedabad
+place	schools in lucknow
+place	parks in surat
+
+# --- place-scoped, former city names ---
+place	cafes in bombay
+place	hospitals in madras
+place	hotels in calcutta
+place	restaurants in poona
+place	pharmacy in bangalore
+place	hospitals in vizag
+place	cafes in gurgaon
+place	hotels in trivandrum
+place	restaurants in cochin
+place	atm in mysore
+
+# --- place-scoped, smaller towns and neighbourhoods ---
+place	hotels in gangtok
+place	restaurants in shillong
+place	cafes in koramangala
+place	gym in indiranagar
+place	hospitals in vellore
+place	hotels in leh
+place	restaurants in darjeeling
+place	pharmacy in andheri
+place	cafes in bandra
+place	hotels in manali
+
+# --- named entities, brands ---
+named	starbucks in delhi
+named	starbucks near me
+named	dominos in mumbai
+named	apollo pharmacy near me
+named	apollo hospital chennai
+named	cafe coffee day near me
+named	reliance fresh near me
+named	sbi atm near me
+named	hdfc bank near me
+named	icici atm near me
+
+# --- named entities, institutions and landmarks ---
+named	IIM Bangalore
+named	Christian Medical College Vellore
+named	Phoenix Mall Mumbai
+named	Fortis Hospital Bangalore
+named	Manipal Hospital Bangalore
+named	Forum Mall Bangalore
+named	AIIMS Delhi
+named	Lalbagh Bangalore
+named	Charminar Hyderabad
+named	Victoria Memorial Kolkata
+
+# --- must decline rather than guess ---
+decline	cafe in india
+decline	restaurants in karnataka
+decline	Zzyzx Memorial Hospital
+decline	Nonexistent Grand Palace Hotel
+decline	qwertyuiop asdfghjkl

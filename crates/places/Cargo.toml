@@ -1,0 +1,24 @@
+[package]
+name = "places"
+version.workspace = true
+edition.workspace = true
+
+[lib]
+name = "places"
+path = "src/lib.rs"
+
+[[bin]]
+name = "build-places"
+path = "src/bin/build_places.rs"
+
+[dependencies]
+common = { path = "../common" }
+serde = { workspace = true }
+serde_json = { workspace = true }
+anyhow = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+tantivy = "0.22"
+clap = { version = "4", features = ["derive"] }
+osmpbf = "0.3"
+reqwest = { version = "0.12", features = ["json", "blocking"] }

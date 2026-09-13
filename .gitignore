@@ -1,0 +1,24 @@
+# Build output
+/target
+frontend/node_modules
+frontend/dist
+
+# Generated indexes — rebuilt from source data, not tracked.
+# places-index is 144 MB and index is 108 MB; both exceed what belongs in
+# git, and both are reproducible from the OSM extract and the crawl.
+/index
+/places-index
+/ranker-data
+
+# Downloaded corpora. india-latest.osm.pbf alone is 1.6 GB — a single file
+# above GitHub's 100 MB hard limit, so committing it fails the push outright.
+/data/osm
+/data/crawled
+/data/warc-cache
+/data/signals.jsonl
+
+# Test fixture copied into the frontend for the browser suite
+frontend/public/eval-cases.json
+
+# macOS
+.DS_Store
