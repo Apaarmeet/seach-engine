@@ -49,8 +49,9 @@ EXPOSE 8080
 # --no-lazy-fetch: the PBF already covers India, so the server must never
 # call Overpass at request time. Without this a query near a region boundary
 # could block for ~28s on an external API during a demo.
+# No --port: the binary reads PORT from the environment, which container
+# platforms assign dynamically. An explicit flag would override it.
 CMD ["api", \
-     "--port", "8080", \
      "--index-dirs", "/app/index", \
      "--places-dir", "/app/places-index", \
      "--static-dir", "/app/static", \

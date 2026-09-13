@@ -39,7 +39,14 @@ struct AppState {
 struct Args {
     #[arg(long, default_value = "index", value_delimiter = ',')]
     index_dirs: Vec<String>,
-    #[arg(long, default_value_t = 8080)]
+    /// Port to listen on.
+    ///
+    /// Reads `PORT` from the environment because most container platforms
+    /// (Railway, Render, Cloud Run, Heroku) assign one dynamically and route
+    /// only to that port. Hardcoding 8080 makes the deploy look healthy while
+    /// the public URL returns 502 — the platform is forwarding somewhere the
+    /// process never bound.
+    #[arg(long, env = "PORT", default_value_t = 8080)]
     port: u16,
     /// Places index for local ("near me") search.
     #[arg(long, default_value = "places-index")]

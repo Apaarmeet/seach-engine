@@ -1,0 +1,11 @@
+# Railway uploads the working directory, using this file in preference to
+# .gitignore. The indexes are excluded from git (too large to version) but
+# MUST be uploaded here — the Dockerfile copies them into the image, and
+# without them the build fails on `COPY places-index/`.
+target/
+data/
+frontend/node_modules/
+frontend/dist/
+.git/
+eval/
+*.md

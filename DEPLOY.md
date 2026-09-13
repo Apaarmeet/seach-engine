@@ -20,6 +20,43 @@ Indexes are in the image rather than on a volume so the deployment stays a
 single immutable artifact. Rebuilding them needs the 1.7 GB OSM extract and
 two passes over 291M elements — far too slow for a deploy step.
 
+## Railway
+
+Railway builds from your repo and assigns a port at runtime. Two things
+that trip this project up specifically:
+
+**1. The port is dynamic.** Railway sets `$PORT` and routes only to that.
+The binary reads it from the environment (`--port` would override it, so the
+Dockerfile deliberately omits the flag). Hardcoding 8080 produces a deploy
+that reports healthy while the public URL 502s.
+
+**2. The indexes are not in git.** `places-index/` (144 MB) and `index/`
+(108 MB) are gitignored, but the Dockerfile copies them into the image. A
+repo-based build therefore fails on `COPY places-index/`. `.railwayignore`
+exists to fix this: Railway prefers it over `.gitignore`, and it permits the
+index directories while still excluding `target/` and `data/`.
+
+So deploy with the CLI from your working directory, not from a GitHub
+integration:
+
+```bash
+npm i -g @railway/cli
+railway login
+railway init            # creates the project
+railway up              # uploads ~250 MB of index, then builds
+railway domain          # generates the public URL
+```
+
+Verify before sending the link:
+
+```bash
+curl -s https://<your-app>.up.railway.app/health          # -> ok
+curl -s https://<your-app>.up.railway.app/places-stats     # -> 649740
+```
+
+Railway has no free tier (trial credit only) and no India region, so expect
+~200 ms of added latency from India and a few dollars a month.
+
 ## Why Fly.io
 
 | Option | Verdict |
