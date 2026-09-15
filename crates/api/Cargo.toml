@@ -11,6 +11,7 @@ path = "src/main.rs"
 common = { path = "../common" }
 indexer = { path = "../indexer" }
 places = { path = "../places" }
+resolver = { path = "../resolver" }
 reqwest = { version = "0.12", features = ["json"] }
 tantivy = "0.22"
 tokio = { workspace = true }

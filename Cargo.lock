@@ -103,6 +103,7 @@ dependencies = [
  "indexer",
  "places",
  "reqwest",
+ "resolver",
  "serde",
  "serde_json",
  "tantivy",
@@ -1980,6 +1981,26 @@ dependencies = [
  "wasm-bindgen-futures",
  "wasm-streams",
  "web-sys",
+]
+
+[[package]]
+name = "resolver"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "common",
+ "flate2",
+ "futures",
+ "places",
+ "reqwest",
+ "scraper",
+ "serde",
+ "serde_json",
+ "signals",
+ "tokio",
+ "tracing",
+ "tracing-subscriber",
+ "url",
 ]
 
 [[package]]

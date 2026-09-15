@@ -32,7 +32,7 @@ RUN cargo build --release -p api
 FROM debian:bookworm-slim
 WORKDIR /app
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends ca-certificates libssl3 \
+    && apt-get install -y --no-install-recommends ca-certificates libssl3 curl \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=backend /build/target/release/api /usr/local/bin/api
@@ -45,6 +45,23 @@ COPY places-index/ ./places-index/
 COPY index/ ./index/
 
 EXPOSE 8080
+
+# Optional web-index source for long-tail recall. Supplied at *run* time,
+# never baked in:
+#
+#   docker run -e SERPER_API_KEY=... -p 8080:8080 <image>
+#
+# Baking a key into an image is how keys leak — image layers are public on a
+# public registry, survive being overwritten in a later layer, and are
+# trivially extractable with `docker history`. With no key set the resolver
+# runs on its own sources and the container still works.
+ENV SERPER_API_KEY=""
+
+# Startup is slow by container standards — the places index is memory-mapped
+# and the gazetteer is a 43 MB JSON parse — so the grace period is generous.
+# Without it an orchestrator kills the container before it ever serves.
+HEALTHCHECK --interval=30s --timeout=5s --start-period=90s --retries=3 \
+    CMD curl -fsS http://localhost:${PORT:-8080}/health || exit 1
 
 # --no-lazy-fetch: the PBF already covers India, so the server must never
 # call Overpass at request time. Without this a query near a region boundary

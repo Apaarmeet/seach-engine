@@ -1,9 +1,8 @@
-mod robots;
 
 use anyhow::Result;
 use clap::Parser;
 use common::{shard_for_url, CrawledPage, OutLink};
-use robots::RobotsRules;
+use common::robots::RobotsRules;
 use scraper::{Html, Selector};
 use std::collections::{HashMap, HashSet, VecDeque};
 use std::fs::OpenOptions;

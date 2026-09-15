@@ -7,6 +7,10 @@ edition.workspace = true
 name = "eval"
 path = "src/main.rs"
 
+[[bin]]
+name = "nav"
+path = "src/bin/nav.rs"
+
 [dependencies]
 common = { path = "../common" }
 serde = { workspace = true }

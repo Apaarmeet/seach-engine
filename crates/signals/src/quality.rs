@@ -13,6 +13,29 @@ const PARKED_MARKERS: &[&str] = &[
     "buy this domain",
     "this domain is for sale",
     "domain name is for sale",
+    // Parking pages phrase this a dozen ways, and the resolver meets far
+    // more of them than the crawler does: it deliberately guesses plausible
+    // domain names, which is exactly the set squatters have registered.
+    // Missing one is not a small error — `govorit-moskva.ru` ("Domain name
+    // is available") was returned as the top answer for a Moscow radio
+    // query, with full confidence.
+    "domain name is available",
+    "this domain is available",
+    "domain is available",
+    "available for purchase",
+    "is for sale",
+    "inquire about this domain",
+    "the domain name you are looking for",
+    "this web page is parked",
+    // The Sedo / HugeDomains house style. Titled "<domain> - <domain>
+    // Resources and Information", which reads as a real page to a relevance
+    // scorer and is how `mohali.com` was returned for "iiser mohali".
+    "resources and information",
+    "this website is for sale",
+    "this domain may be for sale",
+    "premium domain",
+    "high value and premium domain",
+    "domain name for sale",
     "parked domain",
     "please access via the domain name",
     "under construction",

@@ -11,6 +11,10 @@ path = "src/lib.rs"
 name = "build-places"
 path = "src/bin/build_places.rs"
 
+[[bin]]
+name = "build-gazetteer"
+path = "src/bin/build_gazetteer.rs"
+
 [dependencies]
 common = { path = "../common" }
 serde = { workspace = true }

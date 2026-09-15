@@ -10,6 +10,7 @@ export default defineConfig({
     // both behind one reverse proxy the same way).
     proxy: {
       '/search': 'http://localhost:8080',
+      '/resolve': 'http://localhost:8080',
       '/nearby': 'http://localhost:8080',
       '/health': 'http://localhost:8080',
       '/stats': 'http://localhost:8080',

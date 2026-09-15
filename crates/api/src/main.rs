@@ -1,3 +1,4 @@
+mod direct;
 mod nearby;
 mod rank;
 
@@ -171,6 +172,10 @@ async fn main() -> Result<()> {
         !args.no_lazy_fetch,
         args.tile_ttl,
     )?);
+    // The resolver shares the places gazetteer: the same 300k place names
+    // that answer "in Shillong" also tell it that "shillong" is a place
+    // worth keeping in a hostname guess, and which ccTLD to try.
+    let direct = Arc::new(direct::open(places.clone())?);
     tracing::info!(
         "places index {}: {} places",
         args.places_dir,
@@ -187,6 +192,13 @@ async fn main() -> Result<()> {
                 .route("/nearby", get(nearby::nearby_handler))
                 .route("/places-stats", get(nearby::places_stats_handler))
                 .with_state(places),
+        )
+        .merge(
+            Router::new()
+                .route("/resolve", get(direct::resolve_handler))
+                .route("/guide", get(direct::guide_handler))
+                .route("/match", axum::routing::post(direct::match_handler))
+                .with_state(direct),
         )
         .layer(CorsLayer::permissive())
         .layer(CompressionLayer::new());

@@ -4,6 +4,8 @@
 //! That's what lets this go from "one laptop" to "a fleet of machines"
 //! without changing the data model — only how many shards you run.
 
+pub mod robots;
+
 use serde::{Deserialize, Serialize};
 use std::hash::{Hash, Hasher};
 

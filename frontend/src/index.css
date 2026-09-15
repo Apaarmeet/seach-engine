@@ -355,3 +355,72 @@ header.compact .logo { font-size: 1.3rem; }
 }
 .local-pack .places li:last-child { border-bottom: 0; }
 .widened { color: var(--accent); }
+
+/* Resolved-URL card.
+   Visually separated from index results because it is a different kind of
+   claim: not "this matched your words" but "we fetched this and confirmed
+   it". The accent border is the cheapest way to say that without a label. */
+.direct-hit {
+  border-left: 3px solid var(--accent);
+  padding: 0.1rem 0 0.1rem 0.9rem;
+  margin: 0 0 1.9rem;
+}
+.direct-hit h2 {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 0.35rem;
+}
+.direct-why {
+  color: var(--muted);
+  font-size: 0.8rem;
+  margin: 0.35rem 0 0;
+}
+
+/* The located control, shown inline in the explanation line. Uses the same
+   highlight colour the browser itself paints on arrival, so the promise the
+   card makes and what the user then sees are visibly the same thing. */
+.direct-why mark {
+  background: #fdf3a7;
+  color: inherit;
+  padding: 0 0.2em;
+  border-radius: 2px;
+}
+
+/* Direct answer. Visually distinct from results because it is a different
+   kind of claim — a statement of fact rather than a place to go — and the
+   source link is mandatory, never decoration. */
+.inline-answer {
+  background: var(--card, #f7f8fa);
+  border-radius: 10px;
+  padding: 1rem 1.15rem;
+  margin: 0 0 1.5rem;
+}
+.answer-text {
+  margin: 0 0 0.5rem;
+  font-size: 1.05rem;
+  line-height: 1.5;
+}
+.answer-source {
+  font-size: 0.8rem;
+  color: var(--muted);
+  text-decoration: none;
+}
+.answer-source:hover { text-decoration: underline; }
+
+/* Hand-off to the extension. Deliberately quiet: it only appears when the
+   extension is installed, and it is an offer, not the main action. */
+.guide-btn {
+  margin-top: .55rem;
+  padding: .35rem .7rem;
+  font: inherit;
+  font-size: .82rem;
+  color: var(--accent);
+  background: transparent;
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  cursor: pointer;
+}
+.guide-btn:hover { background: color-mix(in srgb, var(--accent) 10%, transparent); }

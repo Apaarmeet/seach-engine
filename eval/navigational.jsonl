@@ -1,0 +1,48 @@
+// Navigational judgments: one query, one correct URL.
+//
+// Different in kind from judgments.jsonl next door. That file grades many
+// URLs per query 0-3 for NDCG, because "which page best answers this?" has
+// degrees of rightness. A navigational query does not: the user is trying to
+// reach one specific page, and everything else is wrong. So the metric is
+// success@1 — did the exact URL come back first — and the judgment is a
+// single URL.
+//
+// Matching is canonical (common::canonical_url), so http/https, a leading
+// www. and a trailing slash do not count against an answer.
+//
+// Honesty notes on how this set was built, because they bound what the
+// number means:
+//   - Every gold URL was fetched and confirmed live before being written
+//     here, independently of the resolver.
+//   - Entities were chosen first and their URLs looked up second, so the set
+//     is not a list of things the resolver already handles. Several cases
+//     are here because they are expected to FAIL: a set with no failures
+//     measures nothing.
+//   - The known bias: these are institutions whose URLs the author could
+//     verify, which skews toward sites that have one. A harder set would be
+//     drawn from query logs.
+
+{"query": "saint edmunds school shillong", "url": "https://stedmundshillong.in/", "kind": "misspelled"}
+{"query": "st edmunds school shillong", "url": "https://stedmundshillong.in/", "kind": "institution"}
+{"query": "welham girls school dehradun", "url": "https://www.welhamgirls.com/", "kind": "institution"}
+{"query": "bishop cotton school shimla", "url": "https://bishopcottonshimla.com/", "kind": "institution"}
+{"query": "the doon school dehradun", "url": "https://www.doonschool.com/", "kind": "institution"}
+{"query": "sherwood college nainital", "url": "https://sherwood.edu.in/", "kind": "institution"}
+{"query": "st stephens college delhi", "url": "https://www.ststephens.edu/", "kind": "institution"}
+{"query": "saint stephens college delhi", "url": "https://www.ststephens.edu/", "kind": "misspelled"}
+{"query": "loyola college chennai", "url": "https://www.loyolacollege.edu/", "kind": "institution"}
+{"query": "bits pilani", "url": "https://www.bits-pilani.ac.in/", "kind": "institution"}
+{"query": "iit kharagpur", "url": "https://www.iitkgp.ac.in/", "kind": "abbreviation"}
+{"query": "jawaharlal nehru university delhi", "url": "https://www.jnu.ac.in/", "kind": "abbreviation"}
+{"query": "iiser pune", "url": "https://www.iiserpune.ac.in/", "kind": "institution"}
+{"query": "ncbs bangalore", "url": "https://www.ncbs.res.in/", "kind": "institution"}
+{"query": "cftri mysore", "url": "https://www.cftri.res.in/", "kind": "institution"}
+{"query": "nit rourkela", "url": "https://www.nitrkl.ac.in/", "kind": "abbreviation"}
+{"query": "valuepickr bajaj finance", "url": "https://forum.valuepickr.com/t/bajaj-finance-limited/267", "kind": "site-page"}
+{"query": "valuepickr deepak nitrite", "url": "https://forum.valuepickr.com/t/deepak-nitrite/977", "kind": "site-page"}
+{"query": "valuepickr avanti feeds", "url": "https://forum.valuepickr.com/t/avanti-feeds/218", "kind": "site-page"}
+{"query": "valuepickr page industries", "url": "https://forum.valuepickr.com/t/page-industries/1255", "kind": "site-page"}
+{"query": "valuepickr pidilite", "url": "https://forum.valuepickr.com/t/pidilite-industry-fevicol-ka-jod/1246", "kind": "site-page"}
+{"query": "valuepickr asian paints", "url": "https://forum.valuepickr.com/t/asian-paints-color-it-green/180967", "kind": "site-page"}
+{"query": "valuepickr titan company", "url": "https://forum.valuepickr.com/t/titan-company-ltd-a-three-decade-old-company/20164", "kind": "site-page"}
+{"query": "govorit moskva", "url": "https://govoritmoskva.ru/", "kind": "foreign"}

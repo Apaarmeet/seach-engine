@@ -75,7 +75,13 @@ export default function App() {
   const [error, setError] = useState(null)
   const [explain, setExplain] = useState(false)
   const [radiusKm, setRadiusKm] = useState(2)
+  const [direct, setDirect] = useState(null)
+  const [directLoading, setDirectLoading] = useState(false)
   const abortRef = useRef(null)
+  const directAbort = useRef(null)
+  // Resolutions already paid for. Retyping a query, or React re-running the
+  // effect, must not send another round of live requests to someone's site.
+  const directCache = useRef(new Map())
 
   const { coords, status, request, isFallback } = useGeolocation()
 
@@ -156,6 +162,55 @@ export default function App() {
     )
     return () => clearTimeout(t)
   }, [query, explain, radiusKm, coords.lat, coords.lon, run])
+
+  /**
+   * Resolving a URL is not searching an index, and it must not be debounced
+   * like one.
+   *
+   * `/search` reads a local index in milliseconds, so firing it on every
+   * keystroke costs nothing. `/resolve` performs DNS lookups and live HTTP
+   * requests against *other people's servers*. Running that per keystroke
+   * would turn one user typing four words into four rounds of traffic
+   * aimed at strangers — rude at best, and indistinguishable from an attack
+   * at scale.
+   *
+   * So: a long idle delay, a minimum of two words (one word is almost never
+   * a navigational query in progress), no firing on local intent, and a
+   * cache so the same query is never resolved twice.
+   */
+  useEffect(() => {
+    const q = query.trim()
+    const words = q.split(/\s+/).filter(Boolean)
+    if (words.length < 2 || proximityIntent(q)) {
+      setDirect(null)
+      return
+    }
+    if (directCache.current.has(q)) {
+      setDirect(directCache.current.get(q))
+      return
+    }
+
+    const t = setTimeout(async () => {
+      directAbort.current?.abort()
+      const controller = new AbortController()
+      directAbort.current = controller
+      setDirectLoading(true)
+      try {
+        const res = await fetch(`/resolve?q=${encodeURIComponent(q)}`, {
+          signal: controller.signal,
+        })
+        if (!res.ok) throw new Error(`API returned ${res.status}`)
+        const data = await res.json()
+        directCache.current.set(q, data)
+        setDirect(data)
+      } catch (e) {
+        if (e.name !== 'AbortError') setDirect(null)
+      } finally {
+        if (directAbort.current === controller) setDirectLoading(false)
+      }
+    }, 1200)
+    return () => clearTimeout(t)
+  }, [query])
 
   const hasResults = webData !== null || placeData !== null
   const resolvedPlace = placeData?.resolved_place ?? null
@@ -254,6 +309,9 @@ export default function App() {
         {error && <p className="error">Couldn’t reach the API: {error}</p>}
         {loading && !hasResults && <p className="meta">Searching…</p>}
 
+        <InlineAnswer data={direct} />
+        <DirectHit data={direct} loading={directLoading} />
+
         {placeData?.unresolved_place && (
           <p className="notice">
             Couldn’t find a place called{' '}
@@ -339,6 +397,125 @@ export default function App() {
         )}
       </main>
     </div>
+  )
+}
+
+/**
+ * Hands a task off to the browser extension, which walks the user through it.
+ *
+ * Only rendered when the extension is actually installed — it sets a flag on
+ * `<html>` when it loads on this origin. Offering a button that silently does
+ * nothing is worse than not offering it, and there is no way for a page to
+ * detect an extension other than letting the extension announce itself.
+ *
+ * The walkthrough is fetched by the extension, not here: it costs a model
+ * call, and paying for one on every search when almost nobody clicks through
+ * would be wasteful.
+ */
+function GuideButton({ query }) {
+  const [state, setState] = useState('idle')
+
+  useEffect(() => {
+    const onMessage = (e) => {
+      if (e.data?.type !== 'RSEARCH_GUIDE_STARTED') return
+      setState(e.data.steps > 0 ? 'started' : e.data.reason || 'no walkthrough')
+    }
+    addEventListener('message', onMessage)
+    return () => removeEventListener('message', onMessage)
+  }, [])
+
+  if (!document.documentElement.dataset.rsearchGuide) return null
+
+  if (state === 'started') return null // The highlights speak for themselves.
+
+  return (
+    <button
+      className="guide-btn"
+      onClick={() => {
+        setState('working')
+        postMessage({ type: 'RSEARCH_START_GUIDE', query }, location.origin)
+      }}
+    >
+      {state === 'working' ? 'Working out the steps…' : 'Show me how →'}
+      {state !== 'idle' && state !== 'working' && ` — ${state}`}
+    </button>
+  )
+}
+
+/**
+ * A direct answer read off the page, shown above everything else.
+ *
+ * Always paired with the source it came from, and never rendered without
+ * one. The answer is produced only from a page that was actually retrieved
+ * and verified, so the link is not decoration — it is the thing that lets a
+ * reader check the claim. An answer with no checkable source is how a search
+ * engine becomes a confident liar.
+ */
+function InlineAnswer({ data }) {
+  const answer = data?.answer
+  if (!answer) return null
+
+  return (
+    <section className="inline-answer">
+      <p className="answer-text">{answer.text}</p>
+      <a className="answer-source" href={answer.source_url}>
+        {answer.source_title || prettyUrl(answer.source_url)}
+      </a>
+    </section>
+  )
+}
+
+/**
+ * The resolved URL, shown above index results.
+ *
+ * Presented as a distinct thing rather than result zero, because it *is* a
+ * distinct claim. Every other row on the page says "this page in our index
+ * matches your words". This row says "we went and looked, and this is the
+ * page you meant" — a stronger claim, arrived at differently, and it earns
+ * its own frame and its own explanation of where it came from.
+ *
+ * It renders nothing when the resolver declined. An empty answer is the
+ * honest outcome for a query it cannot confirm, and dressing that up as a
+ * near-miss would undo the point of having a confidence floor at all.
+ *
+ * When a control was located on the page, the link carries a text fragment
+ * so the browser scrolls to it and highlights it on arrival — the Ctrl+F
+ * step people otherwise do by hand. The plain URL is still shown underneath,
+ * because the fragment makes the address bar unreadable and the user is
+ * entitled to see where they are actually going.
+ *
+ * The per-answer provenance string is deliberately not rendered. It names
+ * internal sources, which is debugging detail rather than something a
+ * searcher can act on; it is still returned by `/resolve` and visible with
+ * `?explain=true`.
+ */
+function DirectHit({ data, loading }) {
+  if (loading) {
+    return <p className="meta">Looking for the exact page…</p>
+  }
+  const answer = data?.answers?.[0]
+  if (!answer) return null
+
+  return (
+    <section className="direct-hit">
+      <h2>Went straight to</h2>
+      <a
+        className="result-title"
+        href={answer.highlight?.url || answer.url}
+      >
+        {answer.title || answer.url}
+      </a>
+      <div className="result-url">{prettyUrl(answer.url)}</div>
+      <p className="direct-why">
+        {answer.highlight && (
+          <>
+            opens at <mark>{answer.highlight.text}</mark> ·{' '}
+          </>
+        )}
+        verified live · confidence {Math.round(answer.score * 100)}%
+      </p>
+      <GuideButton query={query} />
+    </section>
   )
 }
 

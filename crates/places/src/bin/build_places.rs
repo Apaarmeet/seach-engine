@@ -260,6 +260,10 @@ fn ingest_pbf(path: &str, index_dir: &str) -> Result<()> {
                     .find(|(k, _)| k == "population")
                     .and_then(|(_, v)| v.replace(',', "").parse().ok())
                     .unwrap_or(0),
+                // The extract is a single country, so every settlement in
+                // it is in that country. Parameterise if a second extract
+                // is ever ingested into the same gazetteer.
+                country: "in".to_string(),
             });
             return;
         }

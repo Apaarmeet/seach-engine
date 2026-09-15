@@ -1,0 +1,112 @@
+// 100 navigational cases. One query, one correct URL, success@1.
+//
+// How the gold was obtained, per case, in the `gold` field:
+//   wikidata+verified — Wikidata's official-website property (P856), then
+//     fetched live and required to carry the entity's name in its title.
+//   sitemap — taken from the site's own sitemap, so it is independent of
+//     every index the resolver consults.
+//
+// Read the headline number with the circularity in mind: the resolver also
+// consults Wikidata, so `wikidata+verified` cases test ranking, retrieval,
+// parking rejection and sub-page selection, but not discovery. The
+// `sitemap` cases test the full path, and the misspelled cases test query
+// handling against gold the resolver had no hand in choosing.
+{"query": "valuepickr geekay wires ltd", "url": "https://forum.valuepickr.com/t/geekay-wires-ltd/121052", "kind": "site-page", "gold": "sitemap"}
+{"query": "jamia millia islamia", "url": "https://jmi.ac.in", "kind": "institution", "gold": "wikidata+verified"}
+{"query": "valuepickr books value investor", "url": "https://forum.valuepickr.com/t/books-value-investor/886", "kind": "site-page", "gold": "sitemap"}
+{"query": "loyola collage chennai", "url": "https://www.loyolacollege.edu/", "kind": "misspelled", "gold": "wikidata+verified"}
+{"query": "cathedral and john connon schol", "url": "https://cathedral-school.com/", "kind": "misspelled", "gold": "wikidata+verified"}
+{"query": "valuepickr matrimony ltd", "url": "https://forum.valuepickr.com/t/matrimony-com-ltd/18284", "kind": "site-page", "gold": "sitemap"}
+{"query": "chandigarh university uims media studies labs", "url": "https://www.cuchd.in/uims/media-studies/labs.php", "kind": "site-page", "gold": "sitemap"}
+{"query": "abc radio national", "url": "https://www.abc.net.au/listen/radionational", "kind": "institution", "gold": "wikidata+verified"}
+{"query": "chandigarh university doctorate programs phd education", "url": "https://www.cuchd.in/doctorate-programs/phd-Education.php", "kind": "site-page", "gold": "sitemap"}
+{"query": "indian institute of technology kharagpur", "url": "https://www.iitkgp.ac.in", "kind": "institution", "gold": "wikidata+verified"}
+{"query": "sankara nethralaya", "url": "https://www.sankaranethralaya.org/", "kind": "institution", "gold": "wikidata+verified"}
+{"query": "university of hyderabad", "url": "https://uohyd.ac.in", "kind": "institution", "gold": "wikidata+verified"}
+{"query": "valuepickr using the graham formula", "url": "https://forum.valuepickr.com/t/using-the-graham-formula-in-2020/36338", "kind": "site-page", "gold": "sitemap"}
+{"query": "valuepickr portfolio vikas", "url": "https://forum.valuepickr.com/t/my-portfolio-vikas/194538", "kind": "site-page", "gold": "sitemap"}
+{"query": "aligarh muslim univercity", "url": "https://www.amu.ac.in/", "kind": "misspelled", "gold": "wikidata+verified"}
+{"query": "valuepickr ishans portfolio", "url": "https://forum.valuepickr.com/t/ishans-15-15-portfolio/21461", "kind": "site-page", "gold": "sitemap"}
+{"query": "chrisaint university", "url": "https://www.christuniversity.in/", "kind": "misspelled", "gold": "wikidata+verified"}
+{"query": "chandigarh university ait business dept research", "url": "https://www.cuchd.in/ait/business-dept/research.php", "kind": "site-page", "gold": "sitemap"}
+{"query": "the doon schol", "url": "https://www.doonschool.com/", "kind": "misspelled", "gold": "wikidata+verified"}
+{"query": "valuepickr rahshs portfolio", "url": "https://forum.valuepickr.com/t/rahshs-portfolio/4720", "kind": "site-page", "gold": "sitemap"}
+{"query": "lady shri ram college for women", "url": "https://lsr.edu.in/", "kind": "institution", "gold": "wikidata+verified"}
+{"query": "valuepickr suggestions require", "url": "https://forum.valuepickr.com/t/suggestions-require/15951", "kind": "site-page", "gold": "sitemap"}
+{"query": "chandigarh university blogs department chemical engineering", "url": "https://www.cuchd.in/blogs/department-of-chemical-engineering.php", "kind": "site-page", "gold": "sitemap"}
+{"query": "chandigarh university orientation schedule hotels", "url": "https://www.cuchd.in/orientation-schedule-2025/hotels.php", "kind": "site-page", "gold": "sitemap"}
+{"query": "chandigarh university international engineering environment engineering", "url": "https://www.cuchd.in/international/engineering/me-environment-engineering.php", "kind": "site-page", "gold": "sitemap"}
+{"query": "abc radio natioanl", "url": "https://www.abc.net.au/listen/radionational", "kind": "misspelled", "gold": "wikidata+verified"}
+{"query": "chandigarh university library print journals", "url": "https://www.cuchd.in/e-library/print-journals.php", "kind": "site-page", "gold": "sitemap"}
+{"query": "chandigarh university acp programs", "url": "https://www.cuchd.in/acp/programs/", "kind": "site-page", "gold": "sitemap"}
+{"query": "chandigarh university iqac naac certificate", "url": "https://www.cuchd.in/iqac/naac-certificate.php", "kind": "site-page", "gold": "sitemap"}
+{"query": "fergusson college", "url": "https://fergusson.edu/", "kind": "institution", "gold": "wikidata+verified"}
+{"query": "tata memorial hospital", "url": "https://tmckolkata.com/in/", "kind": "institution", "gold": "wikidata+verified"}
+{"query": "fergusson collage", "url": "https://fergusson.edu/", "kind": "misspelled", "gold": "wikidata+verified"}
+{"query": "chandigarh university doctorate programs phd design", "url": "https://www.cuchd.in/doctorate-programs/phd-design.php", "kind": "site-page", "gold": "sitemap"}
+{"query": "mayo college", "url": "http://www.mayocollege.com/", "kind": "institution", "gold": "wikidata+verified"}
+{"query": "chandigarh university applied health sciences", "url": "https://www.cuchd.in/applied-health-sciences/", "kind": "site-page", "gold": "sitemap"}
+{"query": "valuepickr jsw energy energising investors", "url": "https://forum.valuepickr.com/t/jsw-energy-energising-investors/475", "kind": "site-page", "gold": "sitemap"}
+{"query": "panjab university", "url": "https://www.puchd.ac.in", "kind": "institution", "gold": "wikidata+verified"}
+{"query": "bhabha atomic research centre", "url": "https://www.barc.gov.in/", "kind": "institution", "gold": "wikidata+verified"}
+{"query": "chandigarh university research xrd", "url": "https://www.cuchd.in/research/xrd.php", "kind": "site-page", "gold": "sitemap"}
+{"query": "valuepickr shri keshav cements infra", "url": "https://forum.valuepickr.com/t/shri-keshav-cements-infra/122744", "kind": "site-page", "gold": "sitemap"}
+{"query": "valuepickr anil ltd", "url": "https://forum.valuepickr.com/t/anil-ltd/1059", "kind": "site-page", "gold": "sitemap"}
+{"query": "chandigarh university engineering data science", "url": "https://www.cuchd.in/engineering/me-data-science.php", "kind": "site-page", "gold": "sitemap"}
+{"query": "scindia school", "url": "http://www.scindia.edu/", "kind": "institution", "gold": "wikidata+verified"}
+{"query": "all india institue of medical sciences", "url": "https://www.aiims.edu/index.php/en", "kind": "misspelled", "gold": "wikidata+verified"}
+{"query": "indian statistical institute", "url": "https://www.isical.ac.in/index", "kind": "institution", "gold": "wikidata+verified"}
+{"query": "saint xavier s college mumbai", "url": "https://xaviers.edu/", "kind": "misspelled", "gold": "wikidata+verified"}
+{"query": "all india institute of medical sciences", "url": "https://www.aiims.edu/index.php/en", "kind": "institution", "gold": "wikidata+verified"}
+{"query": "indian statistical institue", "url": "https://www.isical.ac.in/index", "kind": "misspelled", "gold": "wikidata+verified"}
+{"query": "valuepickr sutlej textiles", "url": "https://forum.valuepickr.com/t/sutlej-textiles/3175", "kind": "site-page", "gold": "sitemap"}
+{"query": "rishi valley school", "url": "https://www.rishivalley.org/", "kind": "institution", "gold": "wikidata+verified"}
+{"query": "la martiniere calcutta", "url": "http://www.lamartiniere.co/", "kind": "institution", "gold": "wikidata+verified"}
+{"query": "st xavier s college mumbai", "url": "https://xaviers.edu/", "kind": "institution", "gold": "wikidata+verified"}
+{"query": "the doon school", "url": "https://www.doonschool.com/", "kind": "institution", "gold": "wikidata+verified"}
+{"query": "bhabha atomic reserch centre", "url": "https://www.barc.gov.in/", "kind": "misspelled", "gold": "wikidata+verified"}
+{"query": "chandigarh university usb commerce course curriculum", "url": "https://www.cuchd.in/usb/commerce/course-curriculum.php", "kind": "site-page", "gold": "sitemap"}
+{"query": "valuepickr rbi granting banking licenses", "url": "https://forum.valuepickr.com/t/rbi-granting-banking-licenses/66", "kind": "site-page", "gold": "sitemap"}
+{"query": "indian space research organisation", "url": "https://www.isro.gov.in/", "kind": "institution", "gold": "wikidata+verified"}
+{"query": "lady shri ram collage for women", "url": "https://lsr.edu.in/", "kind": "misspelled", "gold": "wikidata+verified"}
+{"query": "valuepickr bliss gvs pharma", "url": "https://forum.valuepickr.com/t/bliss-gvs-pharma/1090", "kind": "site-page", "gold": "sitemap"}
+{"query": "chandigarh university acp life senz", "url": "https://www.cuchd.in/acp/life-senz/", "kind": "site-page", "gold": "sitemap"}
+{"query": "cathedral and john connon school", "url": "https://cathedral-school.com/", "kind": "institution", "gold": "wikidata+verified"}
+{"query": "valuepickr rejis portfolio", "url": "https://forum.valuepickr.com/t/rejis-portfolio/830", "kind": "site-page", "gold": "sitemap"}
+{"query": "valuepickr dhwanils portfolio", "url": "https://forum.valuepickr.com/t/dhwanils-portfolio/717", "kind": "site-page", "gold": "sitemap"}
+{"query": "echo of moscow", "url": "https://echo.msk.ru/", "kind": "institution", "gold": "wikidata+verified"}
+{"query": "valuepickr infotech recent ipo", "url": "https://forum.valuepickr.com/t/lt-infotech-recent-ipo/7874", "kind": "site-page", "gold": "sitemap"}
+{"query": "chandigarh university international engineering electrical engineering", "url": "https://www.cuchd.in/international/engineering/be-electrical-engineering.php", "kind": "site-page", "gold": "sitemap"}
+{"query": "valuepickr entegra ltd", "url": "https://forum.valuepickr.com/t/entegra-ltd/78", "kind": "site-page", "gold": "sitemap"}
+{"query": "banaras hindu university", "url": "https://www.bhu.ac.in/Site/Home/1_2_16_Main-Site", "kind": "institution", "gold": "wikidata+verified"}
+{"query": "securities and exchange board of india", "url": "https://www.sebi.gov.in/", "kind": "institution", "gold": "wikidata+verified"}
+{"query": "radio new zealand", "url": "https://www.rnz.co.nz", "kind": "institution", "gold": "wikidata+verified"}
+{"query": "indian institue of science", "url": "https://www.iisc.ac.in/", "kind": "misspelled", "gold": "wikidata+verified"}
+{"query": "bbc world service", "url": "https://www.bbc.co.uk/sounds/play/live/bbc_world_service", "kind": "institution", "gold": "wikidata+verified"}
+{"query": "loyola college chennai", "url": "https://www.loyolacollege.edu/", "kind": "institution", "gold": "wikidata+verified"}
+{"query": "christ university", "url": "https://www.christuniversity.in/", "kind": "institution", "gold": "wikidata+verified"}
+{"query": "indian space reserch organisation", "url": "https://www.isro.gov.in/", "kind": "misspelled", "gold": "wikidata+verified"}
+{"query": "jawaharlal nehru university", "url": "https://www.jnu.ac.in", "kind": "institution", "gold": "wikidata+verified"}
+{"query": "indian institue of science education and research pune", "url": "https://www.iiserpune.ac.in/", "kind": "misspelled", "gold": "wikidata+verified"}
+{"query": "birla institue of technology and science pilani", "url": "https://www.bits-pilani.ac.in/hyderabad", "kind": "misspelled", "gold": "wikidata+verified"}
+{"query": "valuepickr amritsar investor group", "url": "https://forum.valuepickr.com/t/amritsar-investor-group/137393", "kind": "site-page", "gold": "sitemap"}
+{"query": "valuepickr monopolies duopolies and oligopolies", "url": "https://forum.valuepickr.com/t/monopolies-duopolies-and-oligopolies/19669", "kind": "site-page", "gold": "sitemap"}
+{"query": "manipal academy of higher education", "url": "https://www.manipal.edu/mu.html", "kind": "institution", "gold": "wikidata+verified"}
+{"query": "chandigarh university", "url": "https://www.cuchd.in/", "kind": "institution", "gold": "wikidata+verified"}
+{"query": "indian institue of technology kharagpur", "url": "https://www.iitkgp.ac.in", "kind": "misspelled", "gold": "wikidata+verified"}
+{"query": "miranda house", "url": "https://www.mirandahouse.ac.in/", "kind": "institution", "gold": "wikidata+verified"}
+{"query": "scindia schol", "url": "http://www.scindia.edu/", "kind": "misspelled", "gold": "wikidata+verified"}
+{"query": "birla institute of technology and science pilani", "url": "https://www.bits-pilani.ac.in/hyderabad", "kind": "institution", "gold": "wikidata+verified"}
+{"query": "chandigarh university uiahs forensic sciences workshops", "url": "https://www.cuchd.in/uiahs/forensic-sciences/workshops.php", "kind": "site-page", "gold": "sitemap"}
+{"query": "chandigarh university management bba business analytics", "url": "https://www.cuchd.in/management/bba-business-analytics.php", "kind": "site-page", "gold": "sitemap"}
+{"query": "indian institute of science", "url": "https://www.iisc.ac.in/", "kind": "institution", "gold": "wikidata+verified"}
+{"query": "radio free europe radio liberty", "url": "https://www.rferl.org/", "kind": "institution", "gold": "wikidata+verified"}
+{"query": "aligarh muslim university", "url": "https://www.amu.ac.in/", "kind": "institution", "gold": "wikidata+verified"}
+{"query": "valuepickr marico limited nse marico", "url": "https://forum.valuepickr.com/t/marico-limited-nse-marico/4390", "kind": "site-page", "gold": "sitemap"}
+{"query": "indian institute of science education and research pune", "url": "https://www.iiserpune.ac.in/", "kind": "institution", "gold": "wikidata+verified"}
+{"query": "reserve bank of india", "url": "https://www.rbi.org.in/", "kind": "institution", "gold": "wikidata+verified"}
+{"query": "chandigarh univercity", "url": "https://www.cuchd.in/", "kind": "misspelled", "gold": "wikidata+verified"}
+{"query": "valuepickr mohits portfolio", "url": "https://forum.valuepickr.com/t/mohits-portfolio/22591", "kind": "site-page", "gold": "sitemap"}
+{"query": "chandigarh university blogs impact summit", "url": "https://www.cuchd.in/blogs/ai-impact-summit-2026.php", "kind": "site-page", "gold": "sitemap"}
+{"query": "univercity of hyderabad", "url": "https://uohyd.ac.in", "kind": "misspelled", "gold": "wikidata+verified"}
+{"query": "chandigarh university uid fine arts infrastructure", "url": "https://www.cuchd.in/uid/fine-arts/infrastructure.php", "kind": "site-page", "gold": "sitemap"}

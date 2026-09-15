@@ -23,6 +23,15 @@ pub struct Place {
     /// break ties between same-named places.
     #[serde(default)]
     pub population: u64,
+    /// ISO 3166-1 alpha-2 country code, lowercase, when known.
+    ///
+    /// Empty for entries from the OSM extract, which carries no country tag
+    /// on `place=` nodes. Populated by the GeoNames world ingest, where it
+    /// is the direct answer to a question the URL resolver has to ask
+    /// constantly: a site for something in Moscow is probably under `.ru`,
+    /// and guessing `.in` for it wastes the entire candidate budget.
+    #[serde(default)]
+    pub country: String,
 }
 
 impl Place {
@@ -157,6 +166,7 @@ impl Gazetteer {
                 lat: *lat,
                 lon: *lon,
                 population: 0,
+                country: "in".to_string(),
             });
         }
 
@@ -206,6 +216,7 @@ impl Gazetteer {
                 lat: *lat,
                 lon: *lon,
                 population: 0,
+                country: "in".to_string(),
             });
         }
 
@@ -216,6 +227,7 @@ impl Gazetteer {
                 lat: *lat,
                 lon: *lon,
                 population: 0,
+                country: "in".to_string(),
             });
         }
     }
@@ -332,7 +344,14 @@ mod tests {
     use super::*;
 
     fn p(name: &str, kind: &str, lat: f64, lon: f64, pop: u64) -> Place {
-        Place { name: name.into(), kind: kind.into(), lat, lon, population: pop }
+        Place {
+            name: name.into(),
+            kind: kind.into(),
+            lat,
+            lon,
+            population: pop,
+            country: String::new(),
+        }
     }
 
     #[test]
